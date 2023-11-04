@@ -38,7 +38,8 @@ const favoritesSlice = createSlice({
             console.log('search ' + action.payload);
         },*/
         addToFavorites(state, action: PayloadAction<Movie>) {
-            state.list = [...state.list, action.payload]
+            if (state.list.findIndex(p => p.imdbID === action.payload.imdbID) === -1)
+                state.list = [...state.list, action.payload]
         },
         removeFromFavorites(state, action: PayloadAction<string>) {
             state.list = state.list.filter(p => p.imdbID !== action.payload);

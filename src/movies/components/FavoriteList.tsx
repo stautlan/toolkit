@@ -8,7 +8,6 @@ const FavoriteList = (props: Props) => {
   const favorites = useAppSelector(state => state.favorites)
   return (
     <>
-    <label htmlFor='lbl'>FavoriteList</label>
     <ul>
       {favorites.list.map(p => (
         <FavoriteItem 

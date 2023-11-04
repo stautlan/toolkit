@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAppDispatch } from '../hook';
-import { addFavorite, pointMovies } from '../store/movieSlice'
+import { pointMovies } from '../store/movieSlice'
 import { addToFavorites } from '../store/favoriteSlice'
 import { Movie } from '../model/Movie';
 

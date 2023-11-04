@@ -15,54 +15,6 @@ const initialState: MovieState = {
     error: null,
 }
 
-/*const fetchMovies = createAsyncThunk( //async (id: string) => {
-    "movies/search",
-    async (query: string) => {
-    try {
-        const response = await fetch(`https://www.omdbapi.com/?apikey=64405bd2&=${id}`);
-        if (!response.ok) {
-            throw new Error('error get');
-        }
-        const jsonData = await response.json();
-        //return result;
-        setMovies(jsonData.map((item: Movie) => ({ 
-            Title: item.Title,
-            Director: item.Director,
-            Genre: item.Genre,
-            imdbID: item.imdbID,
-            imdbRating: item.imdbRating,
-            Poster: item.Poster,
-            Year: item.Year,
-         })));
-    } catch (er) {
-        console.error('getMovieId error: ' + er);
-    }
-});*/
-
-/*async function request<TResponse>(
-    url: string, 
-    config: RequestInit
-  ): Promise<TResponse> {
-    try {
-      const response = await fetch(url, config);
-      return await response.json();
-    }
-    catch (error) {
-      // Handle the error.
-    }
-  }*/
-
-/*const [movies, setMovies] = useState<Movie[]>([]);
-const [selectMovie, setSelectMovie] = useState<Movie>({
-    Title: '',
-    Director: '',
-    Genre: '',
-    imdbID: '',
-    imdbRating: '',
-    Poster: '',
-    Year: '',
-})*/
-
 export const searchMovies = createAsyncThunk(
     "movies/search",
     async (query: string) => {
@@ -79,25 +31,15 @@ export const searchIdMovies = createAsyncThunk(
     }
 )
 
-//--------------------------------//
-////////// ¯\_(ツ)_/¯ \\\\\\\\\\\\\\
-/*useEffect(() => {
-    const api = async (id: string) => {
-        const data = await fetchMovies(id);
-        setMovies(data.map())
-    }
-}, [selectMovie]);*/
-
 const moviesSlice = createSlice({
     name: "movies",
     initialState,
     reducers: {
-        getMovies(state, action: PayloadAction<string>) {
-            /*if (action.payload !== '') {
-                state.list = searchMovies(action.payload); //fetchMovies(action.payload);
-            }
-            */
-        },
+        /*getMovies(state, action: PayloadAction<string>) {
+            //if (action.payload !== '') {
+            //    state.list = searchMovies(action.payload); //fetchMovies(action.payload);
+            //}
+        },*/
         pointMovies(state, action: PayloadAction<string>) {
             if (action.payload !== "") {
                 const filmResult = searchIdMovies(action.payload);
@@ -108,10 +50,10 @@ const moviesSlice = createSlice({
         addFavorite(state, action: PayloadAction<Movie>) {
             //console.log('addMovies(): none');
             if (action.payload?.imdbID !== '') {
-                const filmResult = searchIdMovies(action.payload.imdbID);
+                //const filmResult = searchIdMovies(action.payload.imdbID);
                 
-                const item = state.list.filter(p => p.imdbID === action.payload.imdbID);
-                state.list.push(action.payload);
+                //const item = state.list.filter(p => p.imdbID === action.payload.imdbID);
+                //state.list.push(action.payload);
             }
         },
     },
@@ -123,7 +65,6 @@ const moviesSlice = createSlice({
         })
         .addCase(searchMovies.fulfilled, (state, action) => { //: PayloadAction<Movie[]>
             state.isLoading = false;
-            debugger
             state.list = action.payload;
         })
         .addCase(searchMovies.rejected, (state, action) => {
@@ -133,6 +74,6 @@ const moviesSlice = createSlice({
     }
 })
 
-export const { getMovies, pointMovies, addFavorite } = moviesSlice.actions;
+export const { pointMovies, addFavorite } = moviesSlice.actions;
 
 export default moviesSlice.reducer;
