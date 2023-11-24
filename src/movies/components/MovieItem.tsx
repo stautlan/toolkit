@@ -1,4 +1,5 @@
 import React from 'react';
+//import { useAppSelector } from '../hook'
 import { useAppDispatch } from '../hook';
 import { pointMovies } from '../store/movieSlice'
 import { addToFavorites } from '../store/favoriteSlice'
@@ -13,6 +14,7 @@ import { Movie } from '../model/Movie';
 }*/
 
 const MovieItem: React.FC<Movie> = ({ Title, Year, imdbID, Type, Poster }) => {
+  //const movies = useAppSelector(state => { console.log(state.movies.error); return state.movies});
     const dispatch = useAppDispatch();
 
   return (

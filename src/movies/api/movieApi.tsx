@@ -15,6 +15,7 @@ export const fetchMovies = async (title: string) => {
 // GET id
 export const getMovieId = async (id: string) => {
     try {
+        debugger
         const response = await fetch(`https://www.omdbapi.com/?apikey=64405bd2&i=${id}`);
         if (!response.ok) {
             throw new Error('error get');

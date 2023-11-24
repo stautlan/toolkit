@@ -12,7 +12,7 @@ const initialState: FavoritesState = {
 
 /*const search = async (title: string) => {
     try {
-        const response = await fetch(`https://www.omdbapi.com/?apikey=64405bd2&s=${title}`);
+        const response = await fetch(`https://www.omdbapi.com/?apikey=64405bd2&i=${title}`);
         if (!response.ok) {
             throw new Error('error get');
         }
@@ -21,12 +21,27 @@ const initialState: FavoritesState = {
     } catch (er) {
         console.error('search error: ' + er);
     }
-}*/
+}
 
 export const search = async (value: string) => {
     const result = await fetchMovies(value);
     return result;
+}*/
+
+export const searchHeader = async (value: string) => {
+    const result = await getMovieId(value);
+    return result;
 }
+
+export const searchIdMovies = createAsyncThunk(
+    "movies/searchId",
+    async (query: string) => {
+        debugger
+        const response = await getMovieId(query);
+        console.log(response)
+        return response;
+    }
+)
 
 const favoritesSlice = createSlice({
     name: 'search',
@@ -41,12 +56,17 @@ const favoritesSlice = createSlice({
             if (state.list.findIndex(p => p.imdbID === action.payload.imdbID) === -1)
                 state.list = [...state.list, action.payload]
         },
+        selectFavorite(state, action: PayloadAction<string>) {
+            const search = searchHeader(action.payload);
+            debugger
+            console.log(search);
+        },
         removeFromFavorites(state, action: PayloadAction<string>) {
             state.list = state.list.filter(p => p.imdbID !== action.payload);
         },
     }
 })
 
-export const { addToFavorites, removeFromFavorites } = favoritesSlice.actions;
+export const { addToFavorites, selectFavorite, removeFromFavorites } = favoritesSlice.actions;
 
 export default favoritesSlice.reducer;

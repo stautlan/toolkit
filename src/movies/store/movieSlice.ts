@@ -10,7 +10,7 @@ interface MovieState {
 }
 
 const initialState: MovieState = {
-    list: data_movies.Search, //[],
+    list: [], //data_movies.Search, //[],
     isLoading: false,
     error: null,
 }
@@ -26,7 +26,9 @@ export const searchMovies = createAsyncThunk(
 export const searchIdMovies = createAsyncThunk(
     "movies/searchId",
     async (query: string) => {
+        debugger
         const response = await getMovieId(query);
+        console.log(response)
         return response;
     }
 )
@@ -42,12 +44,12 @@ const moviesSlice = createSlice({
         },*/
         pointMovies(state, action: PayloadAction<string>) {
             if (action.payload !== "") {
-                const filmResult = searchIdMovies(action.payload);
                 debugger
-
+                const filmResult = searchIdMovies(action.payload);
+                console.log(filmResult)
             }
         },
-        addFavorite(state, action: PayloadAction<Movie>) {
+        /*addFavorite(state, action: PayloadAction<Movie>) {
             //console.log('addMovies(): none');
             if (action.payload?.imdbID !== '') {
                 //const filmResult = searchIdMovies(action.payload.imdbID);
@@ -55,7 +57,7 @@ const moviesSlice = createSlice({
                 //const item = state.list.filter(p => p.imdbID === action.payload.imdbID);
                 //state.list.push(action.payload);
             }
-        },
+        },*/
     },
     extraReducers: (builder) => {
         builder
@@ -65,7 +67,7 @@ const moviesSlice = createSlice({
         })
         .addCase(searchMovies.fulfilled, (state, action) => { //: PayloadAction<Movie[]>
             state.isLoading = false;
-            state.list = action.payload;
+            state.list = action.payload.Search;
         })
         .addCase(searchMovies.rejected, (state, action) => {
             state.isLoading = false;
@@ -74,6 +76,6 @@ const moviesSlice = createSlice({
     }
 })
 
-export const { pointMovies, addFavorite } = moviesSlice.actions;
+export const { pointMovies/*, addFavorite*/ } = moviesSlice.actions;
 
 export default moviesSlice.reducer;

@@ -5,8 +5,8 @@ import MovieItem from './MovieItem'
 import { searchMovies } from '../store/movieSlice'
 
 const MoviesList = () => {
-  const movies = useAppSelector(state => state.movies);
-  const [filter, setFilter] = useState('Terminator');
+  const movies = useAppSelector(state => { console.log(state.movies.error); return state.movies});
+  const [filter, setFilter] = useState('');
   const dispatch = useAppDispatch();
 
   function handleClick() {
@@ -17,8 +17,8 @@ const MoviesList = () => {
     <div>
       <label>
         Фильтр 
-        <input value={filter} onChange={e => setFilter(e.target.value)} defaultValue='Введите слово' /> {/* value={filter} */}
-        <input type='button' value='...' onClick={(handleClick)}/>
+        <input value={filter} onChange={e => setFilter(e.target.value)} /> {/* defaultValue='Введите слово' value={filter} */}
+        <input type='button' value='Поиск' onClick={(handleClick)}/>
       </label>
       <ul>{movies.list.map((m) => (
         <MovieItem 
